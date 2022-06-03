@@ -40,7 +40,9 @@ function onFormSubmit(e) {
   const savedData = localStorage.getItem(STORAGE_KEY);
   const parsedData = JSON.parse(savedData);
   console.log(parsedData);
-
+  formData = { email: '', message: '' };
   e.target.reset();
   localStorage.removeItem(STORAGE_KEY);
+
+ 
 }
