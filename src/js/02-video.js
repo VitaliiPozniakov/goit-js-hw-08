@@ -6,17 +6,22 @@ const player = new Vimeo.Player(iframe);
 player.getVideoTitle().then(function (title) {});
 
 const onPlay = function (data) {
-  localStorage.setItem(`videoplayer-current-time`, JSON.stringify(data));
+  if (data.seconds === 0) {
+    return;
+  }
+  localStorage.setItem(
+    `videoplayer-current-time`,
+    JSON.stringify(data.seconds)
+  );
 };
 
 player.on('timeupdate', lodashThrottle(onPlay, 1000));
 
 const currentTime = localStorage.getItem(`videoplayer-current-time`);
 const parsedCurrentTime = JSON.parse(currentTime);
-const currentSeconds = parsedCurrentTime.seconds;
 
 player
-  .setCurrentTime(currentSeconds)
+  .setCurrentTime(parsedCurrentTime)
   .then(function (seconds) {
     // seconds = the actual time that the player seeked to
   })
